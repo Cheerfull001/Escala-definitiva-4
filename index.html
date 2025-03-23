@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escala de Equipes 2025 - ATIVA Logística</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Tema Claro */
+        :root {
+            --primary-color: #1a56db;
+            --primary-hover: #1e40af;
+            --text-color: #111827;
+            --bg-color: #ffffff;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+            --header-bg: #1a56db;
+            --header-text: #ffffff;
+        }
+        
+        /* Tema Escuro */
+        .dark {
+            --primary-color: #3b82f6;
+            --primary-hover: #60a5fa;
+            --text-color: #e5e7eb;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --border-color: #374151;
+            --header-bg: #0f172a;
+            --header-text: #ffffff;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .navbar {
+            background-color: var(--header-bg);
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .team-1 {
+            background-color: #1a56db;
+            color: white;
+        }
+        
+        .team-2 {
+            background-color: #059669;
+            color: white;
+        }
+        
+        .team-3 {
+            background-color: #7c3aed;
+            color: white;
+        }
+        
+        .team-4 {
+            background-color: #ea580c;
+            color: white;
+        }
+        
+        .badge-team {
+            padding: 0.35em 0.65em;
+            border-radius: 1rem;
+            font-weight: 600;
+        }
+        
+        table {
+            width: 100%;
+        }
+        
+        th {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .dark th {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        tr:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+        
+        .dark tr:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        
+        footer {
+            margin-top: 2rem;
+            padding: 1.5rem 0;
+            background-color: var(--header-bg);
+            color: var(--header-text);
+        }
+        
+        .info-box {
+            padding: 1rem;
+            border-radius: 0.25rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+        }
+        
+        .info-box.info {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+        }
+        
+        .info-box.warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-color: #f59e0b;
+        }
+        
+        .dark .info-box.info {
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+        
+        .dark .info-box.warning {
+            background-color: rgba(245, 158, 11, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <svg height="40" viewBox="0 0 200 70" xmlns="http://www.w3.org/2000/svg">
+                    <text x="10" y="50" fill="#fff" font-family="Arial" font-size="40" font-weight="bold">ATIVA LOG</text>
+                </svg>
+                Escala de Equipes 2025
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#teams-section"><i class="fas fa-users"></i> Equipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#schedule-section"><i class="fas fa-calendar-week"></i> Escala</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#monthly-section"><i class="fas fa-sync-alt"></i> Remanejamento</a>
+                    </li>
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn nav-link">
+                            <i class="fas fa-moon"></i> Tema
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Filtros -->
+        <div class="card mb-4">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0"><i class="fas fa-filter"></i> Filtros</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5 mb-3 mb-md-0">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            <select id="month-filter" class="form-select">
+                                <option value="">Todos os Meses</option>
+                                <option value="3">Março</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Maio</option>
+                                <option value="6">Junho</option>
+                                <option value="7">Julho</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Setembro</option>
+                                <option value="10">Outubro</option>
+                                <option value="11">Novembro</option>
+                                <option value="12">Dezembro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-5 mb-3 mb-md-0">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-users"></i></span>
+                            <select id="team-filter" class="form-select">
+                                <option value="">Todas as Equipes</option>
+                                <option value="1">Equipe 1</option>
+                                <option value="2">Equipe 2</option>
+                                <option value="3">Equipe 3</option>
+                                <option value="4">Equipe 4</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Composição das Equipes -->
+        <div class="card mb-4" id="teams-section">
+            <div class="card-header" style="background-color: #1a56db; color: white;">
+                <h5 class="mb-0"><i class="fas fa-users"></i> Composição das Equipes</h5>
+            </div>
+            <div class="card-body">
+                <div class="row" id="team-cards">
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-header team-1">
+                                <h5 class="mb-0">Equipe 1</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Pedro</li>
+                                    <li class="list-group-item">Alan</li>
+                                    <li class="list-group-item">Baixinho</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-header team-2">
+                                <h5 class="mb-0">Equipe 2</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Márcio</li>
+                                    <li class="list-group-item">Rodrigo</li>
+                                    <li class="list-group-item">Fábio</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-header team-3">
+                                <h5 class="mb-0">Equipe 3</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Marcelo</li>
+                                    <li class="list-group-item">Wallace</li>
+                                    <li class="list-group-item">Renan</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-header team-4">
+                                <h5 class="mb-0">Equipe 4</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Ibra</li>
+                                    <li class="list-group-item">Matheus</li>
+                                    <li class="list-group-item">William</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Escala de Equipes -->
+        <div class="card mb-4" id="schedule-section">
+            <div class="card-header" style="background-color: #059669; color: white;">
+                <h5 class="mb-0"><i class="fas fa-calendar-week"></i> Escala de Equipes 2025</h5>
+            </div>
+            <div class="card-body">
+                <div class="info-box info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Esta escala começa em <strong>24 de março de 2025</strong> e vai até o final do ano. A rotação de equipes acontece semanalmente.
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover" id="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Semana</th>
+                                <th>Período</th>
+                                <th>Equipe</th>
+                                <th>Membros</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Remanejamento Mensal -->
+        <div class="card mb-4" id="monthly-section">
+            <div class="card-header" style="background-color: #ea580c; color: white;">
+                <h5 class="mb-0"><i class="fas fa-sync-alt"></i> Remanejamento Mensal</h5>
+            </div>
+            <div class="card-body">
+                <div class="info-box warning">
+                    <i class="fas fa-info-circle me-2"></i>
+                    O remanejamento mensal começa em <strong>abril de 2025</strong> e segue um rodízio entre as equipes.
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover" id="monthly-table">
+                        <thead>
+                            <tr>
+                                <th>Mês</th>
+                                <th>Equipe Responsável</th>
+                                <th>Membros</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center">
+        <div class="container">
+            <p>&copy; 2025 ATIVA Logística - Sistema de Escala de Equipes</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script para funcionalidades -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Alternar tema
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlElement = document.documentElement;
+            const moonIcon = '<i class="fas fa-moon"></i> Tema';
+            const sunIcon = '<i class="fas fa-sun"></i> Tema';
+            
+            themeToggle.addEventListener('click', function() {
+                if (htmlElement.classList.contains('dark')) {
+                    htmlElement.classList.remove('dark');
+                    htmlElement.classList.add('light');
+                    themeToggle.innerHTML = moonIcon;
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    htmlElement.classList.remove('light');
+                    htmlElement.classList.add('dark');
+                    themeToggle.innerHTML = sunIcon;
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+            
+            // Verificar tema salvo
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                htmlElement.classList.remove('light');
+                htmlElement.classList.add('dark');
+                themeToggle.innerHTML = sunIcon;
+            } else {
+                themeToggle.innerHTML = moonIcon;
+            }
+            
+            // Filtrar tabelas
+            const monthFilter = document.getElementById('month-filter');
+            const teamFilter = document.getElementById('team-filter');
+            const scheduleRows = document.querySelectorAll('.schedule-row');
+            const monthlyRows = document.querySelectorAll('.monthly-row');
+            
+            function applyFilters() {
+                const monthValue = monthFilter.value;
+                const teamValue = teamFilter.value;
+                
+                scheduleRows.forEach(row => {
+                    const rowMonth = row.getAttribute('data-month');
+                    const rowTeam = row.getAttribute('data-team');
+                    
+                    const monthMatch = !monthValue || rowMonth === monthValue;
+                    const teamMatch = !teamValue || rowTeam === teamValue;
+                    
+                    if (monthMatch && teamMatch) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                
+                monthlyRows.forEach(row => {
+                    const rowMonth = row.getAttribute('data-month');
+                    const rowTeam = row.getAttribute('data-team');
+                    
+                    const monthMatch = !monthValue || rowMonth === monthValue;
+                    const teamMatch = !teamValue || rowTeam === teamValue;
+                    
+                    if (monthMatch && teamMatch) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+            
+            monthFilter.addEventListener('change', applyFilters);
+            teamFilter.addEventListener('change', applyFilters);
+
+
+            const scheduleTable = document.getElementById('schedule-table').querySelector('tbody');
+            const monthlyTable = document.getElementById('monthly-table').querySelector('tbody');
+
+            const scheduleData = [
+                {"week": 1, "start": "24/03/2025", "end": "28/03/2025", "team": 1, "members": ["Pedro", "Alan", "Baixinho"]},
+                {"week": 2, "start": "31/03/2025", "end": "04/04/2025", "team": 2, "members": ["Márcio", "Rodrigo", "Fábio"]},
+                {"week": 3, "start": "07/04/2025", "end": "11/04/2025", "team": 3, "members": ["Marcelo", "Wallace", "Renan"]},
+                {"week": 4, "start": "14/04/2025", "end": "18/04/2025", "team": 4, "members": ["Ibra", "Matheus", "William"]},
+                {"week": 5, "start": "21/04/2025", "end": "25/04/2025", "team": 1, "members": ["Pedro", "Alan", "Baixinho"]},
+                {"week": 6, "start": "28/04/2025", "end": "02/05/2025", "team": 2, "members": ["Márcio", "Rodrigo", "Fábio"]},
+                {"week": 7, "start": "05/05/2025", "end": "09/05/2025", "team": 3, "members": ["Marcelo", "Wallace", "Renan"]},
+                {"week": 8, "start": "12/05/2025", "end": "16/05/2025", "team": 4, "members": ["Ibra", "Matheus", "William"]},
+                {"week": 9, "start": "19/05/2025", "end": "23/05/2025", "team": 1, "members": ["Pedro", "Alan", "Baixinho"]},
+                {"week": 10, "start": "26/05/2025", "end": "30/05/2025", "team": 2, "members": ["Márcio", "Rodrigo", "Fábio"]},
+                {"week": 11, "start": "02/06/2025", "end": "06/06/2025", "team": 3, "members": ["Marcelo", "Wallace", "Renan"]},
+                {"week": 12, "start": "09/06/2025", "end": "13/06/2025", "team": 4, "members": ["Ibra", "Matheus", "William"]},
+                {"week": 13, "start": "16/06/2025", "end": "20/06/2025", "team": 1, "members": ["Pedro", "Alan", "Baixinho"]},
+                {"week": 14, "start": "23/06/2025", "end": "27/06/2025", "team": 2, "members": ["Márcio", "Rodrigo", "Fábio"]},
+                {"week": 15, "start": "30/06/2025", "end": "04/07/2025", "team": 3, "members": ["Marcelo", "Wallace", "Renan"]},
+                {"week": 16, "start": "07/07/2025", "end": "11/07/2025", "team": 4, "members": ["Ibra", "Matheus", "William"]},
+                {"week": 17, "start": "14/07/2025", "end": "18/07/2025", "team": 1, "members": ["Pedro", "Alan", "Baixinho"]},
+                {"week": 18, "start": "21/07/2025", "end": "25/07/2025", "team": 2, "members": ["Márcio", "Rodrigo", "Fábio"]},
+                {"week": 19, "start": "28/07/2025", "end": "01/08/2025", "team": 3, "members": ["Marcelo", "Wallace", "Renan"]},
+                {"week": 20, "start": "04/08/2025", "end": "08/08/2025", "team": 4, "members": ["Ibra", "Matheus", "William"]},
+                {"week": 21, "start": "11/08/2025", "end": "15/08/2025", "team": 1, "members": ["Pedro", "Alan", "Baixinho"]},
+                {"week": 22, "start": "18/08/2025", "end": "22/08/2025", "team": 2, "members": ["Márcio", "Rodrigo", "Fábio"]},
+                {"week": 23, "start": "25/08/2025", "end": "29/08/2025", "team": 3, "members": ["Marcelo", "Wallace", "Renan"]},
+                {"week": 24, "start": "01/09/2025", "end": "05/09/2025", "team": 4, "members": ["Ibra", "Matheus", "William"]},
+                {"week": 25, "start": "08/09/2025", "end": "12/09/2025", "team": 1, "members": ["Pedro", "Alan", "Baixinho"]},
+                {"week": 26, "start": "15/09/2025", "end": "19/09/2025", "team": 2, "members": ["Márcio", "Rodrigo", "Fábio"]},
+                {"week": 27, "start": "22/09/2025", "end": "26/09/2025", "team": 3, "members": ["Marcelo", "Wallace", "Renan"]},
+                {"week": 28, "start": "29/09/2025", "end": "03/10/2025", "team": 4, "members": ["Ibra", "Matheus", "William"]},
+                {"week": 29, "start": "06/10/2025", "end": "10/10/2025", "team": 1, "members": ["Pedro", "Alan", "Baixinho"]},
+                {"week": 30, "start": "13/10/2025", "end": "17/10/2025", "team": 2, "members": ["Márcio", "Rodrigo", "Fábio"]},
+                {"week": 31, "start": "20/10/2025", "end": "24/10/2025", "team": 3, "members": ["Marcelo", "Wallace", "Renan"]},
+                {"week": 32, "start": "27/10/2025", "end": "31/10/2025", "team": 4, "members": ["Ibra", "Matheus", "William"]},
+                {"week": 33, "start": "03/11/2025", "end": "07/11/2025", "team": 1, "members": ["Pedro", "Alan", "Baixinho"]},
+                {"week": 34, "start": "10/11/2025", "end": "14/11/2025", "team": 2, "members": ["Márcio", "Rodrigo", "Fábio"]},
+                {"week": 35, "start": "17/11/2025", "end": "21/11/2025", "team": 3, "members": ["Marcelo", "Wallace", "Renan"]},
+                {"week": 36, "start": "24/11/2025", "end": "28/11/2025", "team": 4, "members": ["Ibra", "Matheus", "William"]},
+                {"week": 37, "start": "01/12/2025", "end": "05/12/2025", "team": 1, "members": ["Pedro", "Alan", "Baixinho"]},
+                {"week": 38, "start": "08/12/2025", "end": "12/12/2025", "team": 2, "members": ["Márcio", "Rodrigo", "Fábio"]},
+                {"week": 39, "start": "15/12/2025", "end": "19/12/2025", "team": 3, "members": ["Marcelo", "Wallace", "Renan"]},
+                {"week": 40, "start": "22/12/2025", "end": "26/12/2025", "team": 4, "members": ["Ibra", "Matheus", "William"]},
+                {"week": 41, "start": "29/12/2025", "end": "02/01/2026", "team": 1, "members": ["Pedro", "Alan", "Baixinho"]}
+            ];
+
+            const monthlyData = [
+                {"month": "Abril", "team": 1, "members": ["Pedro", "Alan", "Baixinho"]},
+                {"month": "Maio", "team": 2, "members": ["Márcio", "Rodrigo", "Fábio"]},
+                {"month": "Junho", "team": 3, "members": ["Marcelo", "Wallace", "Renan"]},
+                {"month": "Julho", "team": 4, "members": ["Ibra", "Matheus", "William"]},
+                {"month": "Agosto", "team": 1, "members": ["Pedro", "Alan", "Baixinho"]},
+                {"month": "Setembro", "team": 2, "members": ["Márcio", "Rodrigo", "Fábio"]},
+                {"month": "Outubro", "team": 3, "members": ["Marcelo", "Wallace", "Renan"]},
+                {"month": "Novembro", "team": 4, "members": ["Ibra", "Matheus", "William"]},
+                {"month": "Dezembro", "team": 1, "members": ["Pedro", "Alan", "Baixinho"]}
+            ];
+
+            function createTableRow(data, type) {
+                const row = document.createElement('tr');
+                row.classList.add(`${type}-row`);
+                row.setAttribute('data-month', type === 'schedule' ? data.start.substring(3,5) : data.month.substring(0,3).toLowerCase()); //Extract Month from date
+                row.setAttribute('data-team', data.team.toString());
+                
+                let cols = [];
+                if (type === 'schedule') {
+                    cols = [
+                        `<td>Semana ${data.week}</td>`,
+                        `<td>${data.start}/2025 - ${data.end}/2025</td>`,
+                        `<td><span class="badge-team team-${data.team}">Equipe ${data.team}</span></td>`,
+                        `<td>${data.members.join(', ')}</td>`
+                    ];
+                } else {
+                    cols = [
+                        `<td>${data.month}</td>`,
+                        `<td><span class="badge-team team-${data.team}">Equipe ${data.team}</span></td>`,
+                        `<td>${data.members.join(', ')}</td>`
+                    ];
+                }
+                row.innerHTML = cols.join('');
+                return row;
+            }
+
+            scheduleData.forEach(item => scheduleTable.appendChild(createTableRow(item, 'schedule')));
+            monthlyData.forEach(item => monthlyTable.appendChild(createTableRow(item, 'monthly')));
+
+            applyFilters();
+        });
+    </script>
+</body>
+</html>
